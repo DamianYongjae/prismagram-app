@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, Provider } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { AsyncStorage } from "react-native";
 
 export const AuthContext: React.Context<any> = createContext(0);
