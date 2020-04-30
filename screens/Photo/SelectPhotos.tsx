@@ -10,6 +10,6 @@ const Aview = styled.View`
 
 export default () => (
   <Aview>
-    <Text>Home</Text>
+    <Text>Select Photo</Text>
   </Aview>
 );

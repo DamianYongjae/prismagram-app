@@ -8,8 +8,10 @@ const Aview = styled.View`
   flex: 1;
 `;
 
-export default () => (
+export default ({ navigation }) => (
   <Aview>
-    <Text>Home</Text>
+    <TouchableOpacity onPress={() => navigation.navigate("UploadPhoto")}>
+      <Text>Take Photo</Text>
+    </TouchableOpacity>
   </Aview>
 );
