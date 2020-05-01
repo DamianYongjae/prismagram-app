@@ -8,8 +8,8 @@ const Aview = styled.View`
   flex: 1;
 `;
 
-export default () => (
-  <Aview>
+export default (): JSX.Element => (
+  <Aview name="Home">
     <Text>Home</Text>
   </Aview>
 );

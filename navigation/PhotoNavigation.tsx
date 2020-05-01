@@ -7,7 +7,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 const Tab = createMaterialTopTabNavigator();
 
-function PhotoTabNavigation() {
+function PhotoTabNavigation(): JSX.Element {
   return (
     <Tab.Navigator tabBarPosition="bottom">
       <Tab.Screen name="SelectPhotos" component={SelectPhotos} />
@@ -18,7 +18,7 @@ function PhotoTabNavigation() {
 
 const Stack = createStackNavigator();
 
-export default function PhotoNavigation() {
+export default function PhotoNavigation(): JSX.Element {
   return (
     <Stack.Navigator>
       <Stack.Screen name="PhotoTabs" component={PhotoTabNavigation} />

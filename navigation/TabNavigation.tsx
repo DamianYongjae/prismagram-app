@@ -1,20 +1,57 @@
-import React from "react";
-import Home from "../screens/Auth/Home";
-import Search from "../screens/Auth/Search";
-import Notifications from "../screens/Auth/Notifications";
-import Profile from "../screens/Auth/Profile";
-import { View } from "react-native";
+import React, { Component } from "react";
+import Home from "../screens/Tabs/Home";
+import Search from "../screens/Tabs/Search";
+import Notifications from "../screens/Tabs/Notifications";
+import Profile from "../screens/Tabs/Profile";
+import MessagesLink from "../components/MessagesLink";
+import { View, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
 import PhotoNavigation from "./PhotoNavigation";
+import { TouchableOpacity } from "react-native-gesture-handler";
+
+const stackFactory = (initialRoute): JSX.Element => {
+  const Stack = createStackNavigator();
+  const { name, params } = initialRoute.route;
+
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name={name}
+        component={params.routeName}
+        options={params.customConfig}
+      />
+    </Stack.Navigator>
+  );
+};
 
 const Tab = createBottomTabNavigator();
 
-export default function TabNavigation({ navigation }) {
+export default function TabNavigation({ navigation }): JSX.Element {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Search" component={Search} />
+      <Tab.Screen
+        name="Home"
+        component={stackFactory}
+        initialParams={{
+          routeName: Home,
+          customConfig: {
+            title: "Home",
+            headerRight: () => <MessagesLink navigation={navigation} />,
+          },
+        }}
+      />
+      <Tab.Screen
+        name="Search"
+        component={stackFactory}
+        initialParams={{
+          routeName: Search,
+          customConfig: {
+            title: "Search",
+          },
+        }}
+      />
       <Tab.Screen
         name="Add"
         component={View}
@@ -25,8 +62,26 @@ export default function TabNavigation({ navigation }) {
           },
         }}
       />
-      <Tab.Screen name="Notifications" component={Notifications} />
-      <Tab.Screen name="Profile" component={Profile} />
+      <Tab.Screen
+        name="Notifications"
+        component={stackFactory}
+        initialParams={{
+          routeName: Notifications,
+          customConfig: {
+            title: "Notifications",
+          },
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={stackFactory}
+        initialParams={{
+          routeName: Profile,
+          customConfig: {
+            title: "Profile",
+          },
+        }}
+      />
     </Tab.Navigator>
   );
 }

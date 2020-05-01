@@ -5,7 +5,7 @@ import AuthNavigation from "../navigation/AuthNavigation";
 import TabNavigation from "../navigation/TabNavigation";
 import MainNavigation from "../navigation/MainNavigation";
 
-export default () => {
+export default (): JSX.Element => {
   //   const isLoggedIn: boolean = useIsLoggedIn();
   //   const logIn: object = useLogin();
   //   const logOut: object = useLogOut();
