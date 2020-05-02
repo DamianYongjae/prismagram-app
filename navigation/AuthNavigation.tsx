@@ -7,7 +7,7 @@ import { NavigationContainer } from "@react-navigation/native";
 
 const Stack = createStackNavigator();
 
-export default function AuthNavigation() {
+export default function AuthNavigation(): JSX.Element {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home" headerMode="none">

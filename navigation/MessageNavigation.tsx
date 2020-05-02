@@ -5,7 +5,7 @@ import Message from "../screens/Messages/Message";
 
 const Stack = createStackNavigator();
 
-export default function MessageNavigation() {
+export default function MessageNavigation(): JSX.Element {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Messages" component={Messages} />

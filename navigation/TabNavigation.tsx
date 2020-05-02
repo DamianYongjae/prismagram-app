@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 import Home from "../screens/Tabs/Home";
 import Search from "../screens/Tabs/Search";
 import Notifications from "../screens/Tabs/Notifications";
 import Profile from "../screens/Tabs/Profile";
 import MessagesLink from "../components/MessagesLink";
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";

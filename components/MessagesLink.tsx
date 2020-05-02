@@ -8,11 +8,13 @@ const Container = styled.TouchableOpacity``;
 
 const Atext = styled.Text``;
 
-export default withNavigation(({ navigation }) => (
-  <Container onPress={() => navigation.navigate("MessageNavigation")}>
-    <Atext>Messages</Atext>
-  </Container>
-));
+export default withNavigation(
+  ({ navigation }): JSX.Element => (
+    <Container onPress={() => navigation.navigate("MessageNavigation")}>
+      <Atext>Messages</Atext>
+    </Container>
+  )
+);
 
 // export default function MessagesLink() {
 //   const navigation = useNavigation();
