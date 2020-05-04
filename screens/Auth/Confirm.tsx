@@ -24,7 +24,7 @@ type dataProp = {
 
 export default ({ route }) => {
   const confirmInput: useInputProps = useInput("");
-  const logIn: object = useLogin();
+  const logIn = useLogin();
   const [loading, setLoading]: [boolean, Function] = useState(false);
   const [confirmSecretMutation] = useMutation(CONFIRM_SECRET, {
     variables: {
@@ -45,7 +45,7 @@ export default ({ route }) => {
         data: { confirmSecret },
       } = await confirmSecretMutation();
       if (confirmSecret !== "" || confirmSecret !== false) {
-        logIn;
+        logIn(confirmSecret);
       } else {
         Alert.alert("Wrong secret");
       }

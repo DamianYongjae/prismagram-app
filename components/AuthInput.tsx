@@ -7,7 +7,7 @@ const Container = styled.View`
 `;
 
 const TextInput = styled.TextInput`
-  width: ${constants.width / 2}px;
+  width: ${constants.width / 1.7}px;
   background-color: ${(props) => props.theme.greyColor};
   padding: 10px;
   border: 1px solid ${(props) => props.theme.lightGreyColor};
@@ -17,15 +17,15 @@ const TextInput = styled.TextInput`
 type InputProps = {
   placeholder: string;
   value: string;
-  keyboardType:
+  keyboardType?:
     | "default"
     | "number-pad"
     | "decimal-pad"
     | "numeric"
     | "email-address"
     | "phone-pad";
-  autoCapitalize: "none" | "sentences" | "words" | "characters";
-  returnKeyType: "done" | "go" | "next" | "search" | "send";
+  autoCapitalize?: "none" | "sentences" | "words" | "characters";
+  returnKeyType?: "done" | "go" | "next" | "search" | "send";
   onChange: Function;
   onSubmitEditing?: Function;
   autoCorrect?: boolean;
