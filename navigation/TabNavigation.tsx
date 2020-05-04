@@ -5,11 +5,8 @@ import Notifications from "../screens/Tabs/Notifications";
 import Profile from "../screens/Tabs/Profile";
 import MessagesLink from "../components/MessagesLink";
 import { View } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
-import PhotoNavigation from "./PhotoNavigation";
-import { TouchableOpacity } from "react-native-gesture-handler";
 
 const stackFactory = (initialRoute): JSX.Element => {
   const Stack = createStackNavigator();

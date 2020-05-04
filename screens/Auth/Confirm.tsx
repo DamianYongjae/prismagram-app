@@ -15,6 +15,13 @@ const View = styled.View`
   flex: 1;
 `;
 
+type secretDataProp = {
+  data: Promise<dataProp>;
+};
+type dataProp = {
+  confirmSecret: string;
+};
+
 export default ({ route }) => {
   const confirmInput: useInputProps = useInput("");
   const logIn: object = useLogin();

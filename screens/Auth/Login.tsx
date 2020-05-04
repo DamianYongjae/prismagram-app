@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useMutation, MutationFn } from "react-apollo-hooks";
+import { useMutation } from "react-apollo-hooks";
 import { TouchableWithoutFeedback, Keyboard } from "react-native";
 import styled from "styled-components";
 import AuthButton from "../../components/AuthButton";

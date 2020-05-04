@@ -1,8 +1,7 @@
 import React from "react";
-import { Text, View, TouchableOpacity } from "react-native";
+import { View } from "react-native";
 import { useIsLoggedIn, useLogin, useLogOut } from "../AuthContext";
 import AuthNavigation from "../navigation/AuthNavigation";
-import TabNavigation from "../navigation/TabNavigation";
 import MainNavigation from "../navigation/MainNavigation";
 
 export default (): JSX.Element => {

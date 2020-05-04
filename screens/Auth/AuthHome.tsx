@@ -1,5 +1,4 @@
 import React from "react";
-import { Text, View, TouchableOpacity } from "react-native";
 import styled from "styled-components";
 import constants from "../constants";
 import AuthButton from "../../components/AuthButton";
