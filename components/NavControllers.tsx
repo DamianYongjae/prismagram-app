@@ -6,10 +6,10 @@ import TabNavigation from "../navigation/TabNavigation";
 import MainNavigation from "../navigation/MainNavigation";
 
 export default (): JSX.Element => {
-  //   const isLoggedIn: boolean = useIsLoggedIn();
-  //   const logIn: object = useLogin();
-  //   const logOut: object = useLogOut();
-  const isLoggedIn: boolean = true;
+  const isLoggedIn: boolean = useIsLoggedIn();
+  const logIn: object = useLogin();
+  const logOut: object = useLogOut();
+  // const isLoggedIn: boolean = true;
   return (
     <View style={{ flex: 1 }}>
       {isLoggedIn ? (
