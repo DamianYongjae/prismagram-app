@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-type useInputProps = {
+export type useInputProps = {
   value: string;
   onChange: Function;
 };

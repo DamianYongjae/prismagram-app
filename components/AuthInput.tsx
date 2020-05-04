@@ -25,15 +25,21 @@ type InputProps = {
     | "email-address"
     | "phone-pad";
   autoCapitalize: "none" | "sentences" | "words" | "characters";
+  returnKeyType: "done" | "go" | "next" | "search" | "send";
   onChange: Function;
+  onSubmitEditing?: Function;
+  autoCorrect?: boolean;
 };
 
 const AuthInput = ({
   placeholder,
   value,
   keyboardType = "default",
-  autoCapitalize,
+  autoCapitalize = "none",
+  returnKeyType = "done",
   onChange,
+  onSubmitEditing = () => null,
+  autoCorrect = true,
 }: InputProps): JSX.Element => (
   <Container>
     <TextInput
@@ -41,6 +47,9 @@ const AuthInput = ({
       autoCapitalize={autoCapitalize}
       keyboardType={keyboardType}
       placeholder={placeholder}
+      returnKeyType={returnKeyType}
+      onSubmitEditing={onSubmitEditing}
+      autoCorrect={autoCorrect}
       value={value}
     />
   </Container>

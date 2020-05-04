@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import constants from "../screens/constants";
+import { ActivityIndicator } from "react-native";
 
 const Touchable = styled.TouchableOpacity``;
 const Container = styled.View`
@@ -19,12 +20,17 @@ const Text = styled.Text`
 type ButtonProps = {
   text: string;
   onPress: Function;
+  loading: boolean;
 };
 
-const AuthButton = ({ text, onPress }: ButtonProps): JSX.Element => (
-  <Touchable onPress={onPress}>
+const AuthButton = ({
+  text,
+  onPress,
+  loading = false,
+}: ButtonProps): JSX.Element => (
+  <Touchable disabled={loading} onPress={onPress}>
     <Container>
-      <Text>{text}</Text>
+      {loading ? <ActivityIndicator color={"white"} /> : <Text>{text}</Text>}
     </Container>
   </Touchable>
 );

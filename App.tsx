@@ -14,10 +14,10 @@ import { ThemeProvider } from "styled-components";
 import NavControllers from "./components/NavControllers";
 import { AuthProvider } from "./AuthContext";
 
-export default function App() {
-  const [loaded, setLoaded] = useState(false);
-  const [client, setClient] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(null);
+export default function App(): JSX.Element {
+  const [loaded, setLoaded]: [boolean, Function] = useState(false);
+  const [client, setClient]: [ApolloClient<void>, Function] = useState(null);
+  const [isLoggedIn, setIsLoggedIn]: [boolean, Function] = useState(null);
 
   const preLoad = async (): Promise<void> => {
     try {

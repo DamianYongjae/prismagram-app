@@ -8,7 +8,7 @@ const Aview = styled.View`
   flex: 1;
 `;
 
-export default ({ navigation }) => (
+export default ({ navigation }): JSX.Element => (
   <Aview>
     <TouchableOpacity onPress={() => navigation.navigate("UploadPhoto")}>
       <Text>Take Photo</Text>
