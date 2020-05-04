@@ -22,6 +22,7 @@
     "expo-cli": "3.20.1",
     "expo-facebook": "~8.1.0",
     "expo-font": "~8.1.0",
+    "expo-google-app-auth": "^8.1.0",
     "global": "^4.4.0",
     "graphql": "^15.0.0",
     "react": "~16.9.0",
