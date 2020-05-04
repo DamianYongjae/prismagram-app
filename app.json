@@ -3,6 +3,7 @@
     "name": "prismagram-app",
     "slug": "prismagram-app",
     "platforms": ["ios", "android"],
+    "sdkVersion": "37.0.0",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

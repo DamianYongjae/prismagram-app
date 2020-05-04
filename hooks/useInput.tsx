@@ -3,6 +3,7 @@ import React, { useState } from "react";
 export type useInputProps = {
   value: string;
   onChange: Function;
+  setValue: Function;
 };
 
 const useInput = (initialValue: string): useInputProps => {
@@ -11,7 +12,7 @@ const useInput = (initialValue: string): useInputProps => {
   const onChange = (text: string): void => {
     setValue(text);
   };
-  return { value, onChange };
+  return { value, onChange, setValue };
 };
 
 export default useInput;

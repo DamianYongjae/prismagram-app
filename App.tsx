@@ -20,8 +20,6 @@ export default function App(): JSX.Element {
   const [isLoggedIn, setIsLoggedIn]: [boolean, Function] = useState(null);
 
   const preLoad = async (): Promise<void> => {
-    await AsyncStorage.clear();
-
     try {
       await Font.loadAsync({
         //try to preload font
