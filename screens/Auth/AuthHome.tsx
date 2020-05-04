@@ -17,21 +17,6 @@ const Image = styled.Image`
 
 const Touchable = styled.TouchableOpacity``;
 
-const SignUpBtn = styled.View`
-  background-color: ${(props) => props.theme.blueColor};
-  padding: 10px;
-  margin: 0px 50px;
-  border-radius: 4px;
-  width: ${constants.width / 2}px;
-  margin-bottom: 25px;
-`;
-
-const SignUpBtnText = styled.Text`
-  color: white;
-  text-align: center;
-  font-weight: 600;
-`;
-
 const LoginLink = styled.View``;
 const LoginLinkText = styled.Text`
   color: ${(props) => props.theme.blueColor};

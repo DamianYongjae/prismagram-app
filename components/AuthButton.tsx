@@ -21,7 +21,7 @@ type ButtonProps = {
   onPress: Function;
 };
 
-const AuthButton = ({ text, onPress }: ButtonProps) => (
+const AuthButton = ({ text, onPress }: ButtonProps): JSX.Element => (
   <Touchable onPress={onPress}>
     <Container>
       <Text>{text}</Text>

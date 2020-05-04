@@ -34,7 +34,7 @@ const AuthInput = ({
   keyboardType = "default",
   autoCapitalize,
   onChange,
-}: InputProps) => (
+}: InputProps): JSX.Element => (
   <Container>
     <TextInput
       onChangeText={onChange}

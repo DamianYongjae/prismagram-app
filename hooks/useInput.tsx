@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 
-const useInput = (initialValue) => {
-  const [value, setValue] = useState(initialValue);
+type useInputProps = {
+  value: string;
+  onChange: Function;
+};
 
-  const onChange = (text) => {
+const useInput = (initialValue: string): useInputProps => {
+  const [value, setValue]: [string, Function] = useState(initialValue);
+
+  const onChange = (text: string): void => {
     setValue(text);
   };
   return { value, onChange };
