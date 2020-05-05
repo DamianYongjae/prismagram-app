@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import styled from "styled-components";
+import Loader from "../../components/Loader";
 
 const Aview = styled.View`
   justify-content: center;
@@ -10,6 +11,6 @@ const Aview = styled.View`
 
 export default (): JSX.Element => (
   <Aview name="Home">
-    <Text>Home</Text>
+    <Loader />
   </Aview>
 );
