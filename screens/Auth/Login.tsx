@@ -38,7 +38,7 @@ export default ({ navigation, route }) => {
     try {
       setLoading(true);
       const {
-        data: { requestSecret },
+        data: { requestSecret }, // token
       } = await requestSecretMutation();
       if (requestSecret) {
         Alert.alert("check your email");

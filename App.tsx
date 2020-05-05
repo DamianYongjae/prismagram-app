@@ -33,10 +33,17 @@ export default function App(): JSX.Element {
       const cache: InMemoryCache = new InMemoryCache(); //create cache to persist cache.
       await persistCache({
         cache,
-        storage: AsyncStorage, //like local storage
+        storage: AsyncStorage, //like local storage. if you refresh data still there.
       });
       const client: ApolloClient<void> = new ApolloClient({
         cache,
+        request: async (operation) => {
+          // requrest is a function that is going to give us an operation argument will be called every request!!
+          const token = await AsyncStorage.getItem("jwt");
+          return operation.setContext({
+            headers: { Authorization: `Bearer ${token}` },
+          });
+        },
         ...options,
       });
       const isLoggedIn: boolean = JSON.parse(
