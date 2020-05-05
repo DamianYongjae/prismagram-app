@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import TabNavigation from "./TabNavigation";
 import PhotoNavigation from "./PhotoNavigation";
 import MessageNavigation from "./MessageNavigation";
+import CommentNavigation from "./CommentNavigation";
 import { stackStyles } from "./config";
 
 const Stack = createStackNavigator();
@@ -23,6 +24,7 @@ const MainNavigation = (): JSX.Element => {
         <Stack.Screen name="PhotoNavigation" component={PhotoNavigation} />
         <Stack.Screen name="TabNavigation" component={TabNavigation} />
         <Stack.Screen name="MessageNavigation" component={MessageNavigation} />
+        <Stack.Screen name="CommentNavigation" component={CommentNavigation} />
       </Stack.Navigator>
     </NavigationContainer>
   );
