@@ -5,36 +5,15 @@ import Loader from "../../components/Loader";
 import { gql } from "apollo-boost";
 import { useQuery } from "react-apollo-hooks";
 import Post from "../../components/Post";
+import { POST_FRAGMENT } from "../../fragment";
 
 export const FEED_QUERY = gql`
   {
     seeFeed {
-      id
-      location
-      caption
-      user {
-        id
-        avatar
-        username
-      }
-      files {
-        id
-        url
-      }
-      likeCount
-      commentCount
-      isLiked
-      comments {
-        id
-        text
-        user {
-          id
-          username
-        }
-      }
-      createdAt
+      ...PostParts
     }
   }
+  ${POST_FRAGMENT}
 `;
 
 export default ({ navigation }): JSX.Element => {
@@ -50,7 +29,6 @@ export default ({ navigation }): JSX.Element => {
       setRefreshing(false);
     }
   };
-  console.log(data);
 
   return (
     <ScrollView

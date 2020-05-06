@@ -7,7 +7,6 @@ import Swiper from "react-native-swiper";
 import constants from "../screens/constants";
 import styles from "../styles";
 import { gql } from "apollo-boost";
-import CommentNavigation from "../navigation/CommentNavigation";
 
 const LIKE_POST = gql`
   mutation toggleLike($postId: String!) {

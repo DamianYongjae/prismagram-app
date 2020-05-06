@@ -109,6 +109,15 @@ export default ({ route }) => {
                   datas.comments.map((data) => {
                     return (
                       <CommentContainer key={data.id}>
+                        <Image
+                          style={{
+                            height: 30,
+                            width: 30,
+                            borderRadius: 20,
+                            marginRight: 5,
+                          }}
+                          source={{ uri: datas.user.avatar }}
+                        />
                         <Touchable>
                           <Id>{data.user.username}</Id>
                         </Touchable>

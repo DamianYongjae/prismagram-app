@@ -12,6 +12,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import NavIcon from "../components/NavIcon";
 import styles from "../styles";
 import { stackStyles } from "./config";
+import Detail from "../screens/Detail";
 
 const stackFactory = (initialRoute): JSX.Element => {
   const Stack = createStackNavigator();
@@ -30,6 +31,7 @@ const stackFactory = (initialRoute): JSX.Element => {
         component={params.routeName}
         options={params.customConfig}
       />
+      <Stack.Screen name="Detail" component={Detail} />
     </Stack.Navigator>
   );
 };
