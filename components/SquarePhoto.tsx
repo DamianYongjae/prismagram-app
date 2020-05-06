@@ -5,11 +5,11 @@ import { withNavigation } from "react-navigation";
 
 type SquarePhotoProps = {
   navigation?;
-  files: Array;
+  files?;
   id: string;
 };
 
-const SquarePhoto = ({ navigation, files, id }: SquarePhotoProps) => {
+const SquarePhoto = ({ navigation, files = [], id }: SquarePhotoProps) => {
   return (
     <TouchableOpacity onPress={() => navigation.navigate("Detail", { id })}>
       <Image

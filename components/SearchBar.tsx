@@ -13,8 +13,8 @@ const SearchBar = ({ onChange, value, onSubmit }: SearchBarProps) => (
   <TextInput
     value={value}
     placeholder={"🔍 Search"}
-    onChangeText={onChange}
-    onEndEditing={onSubmit}
+    onChangeText={(value) => onChange(value)}
+    onEndEditing={() => onSubmit()}
     returnKeyType="search"
     style={{
       width: constants.width - 40,

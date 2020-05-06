@@ -43,7 +43,7 @@ export default ({ navigation }) => {
     fetchPolicy: "network-only",
   });
 
-  const onRefresh = async (): void => {
+  const onRefresh = async (): Promise<void> => {
     try {
       setRefreshing(true);
       refetch({ variables: { term } });
