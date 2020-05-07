@@ -69,6 +69,10 @@ export default ({ navigation }) => {
   });
   return (
     <ScrollView
+      contentContainerStyle={{
+        flexDirection: "row",
+        flexWrap: "wrap",
+      }}
       style={{ flex: 1 }}
       refreshControl={
         <RefreshControl onRefresh={onRefresh} refreshing={refreshing} />

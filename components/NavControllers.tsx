@@ -11,14 +11,15 @@ export default (): JSX.Element => {
   // const isLoggedIn: boolean = true;
   return (
     <View style={{ flex: 1 }}>
-      {isLoggedIn ? (
+      <MainNavigation />
+      {/* {isLoggedIn ? (
         <MainNavigation />
       ) : (
         // <TouchableOpacity onPress={logOut}>
         //   <Text>Log Out</Text>
         // </TouchableOpacity>
         <AuthNavigation />
-      )}
+      )} */}
     </View>
   );
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, TouchableOpacity } from "react-native";
+import { Text, View, TouchableOpacity, Image } from "react-native";
 import styled from "styled-components";
 
 const Aview = styled.View`
@@ -8,8 +8,19 @@ const Aview = styled.View`
   flex: 1;
 `;
 
-export default () => (
-  <Aview>
-    <Text>Upload Photo</Text>
-  </Aview>
-);
+export default ({ navigation, route }) => {
+  console.log(route.params.photo);
+
+  navigation.setOptions({
+    headerTitle: "Upload",
+  });
+
+  return (
+    <Aview>
+      <Image
+        style={{ width: 100, height: 100 }}
+        source={{ uri: route.params.photo.uri }}
+      />
+    </Aview>
+  );
+};

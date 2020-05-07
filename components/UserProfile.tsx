@@ -110,7 +110,7 @@ const UserProfile = ({
         <TouchableOpacity onPress={toggleGrid}>
           <Button>
             <Ionicons
-              color={isGrid ? styles.black : styles.darkGreyColor}
+              color={isGrid ? styles.blackColor : styles.darkGreyColor}
               size={32}
               name={Platform.OS === "ios" ? "ios-grid" : "md-grid"}
             />
@@ -119,7 +119,7 @@ const UserProfile = ({
         <TouchableOpacity onPress={toggleGrid}>
           <Button>
             <Ionicons
-              color={!isGrid ? styles.black : styles.darkGreyColor}
+              color={!isGrid ? styles.blackColor : styles.darkGreyColor}
               size={32}
               name={Platform.OS === "ios" ? "ios-list" : "md-list"}
             />
@@ -130,6 +130,7 @@ const UserProfile = ({
         style={{
           flexDirection: `${isGrid ? "row" : "column"}`,
           width: constants.width,
+          flexWrap: "wrap",
         }}
       >
         {posts &&
