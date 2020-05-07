@@ -7,6 +7,7 @@ import Swiper from "react-native-swiper";
 import constants from "../screens/constants";
 import styles from "../styles";
 import { gql } from "apollo-boost";
+import { withNavigation } from "react-navigation";
 
 const LIKE_POST = gql`
   mutation toggleLike($postId: String!) {
@@ -121,13 +122,21 @@ const Post = ({
   return (
     <Container>
       <Header>
-        <Touchable>
+        <Touchable
+          onPress={() =>
+            navigation.navigate("UserDetail", { username: user.username })
+          }
+        >
           <Image
             style={{ height: 40, width: 40, borderRadius: 20 }}
             source={{ uri: user.avatar }}
           />
         </Touchable>
-        <Touchable>
+        <Touchable
+          onPress={() =>
+            navigation.navigate("UserDetail", { username: user.username })
+          }
+        >
           <HeaderUserContainer>
             <Bold>{user.username}</Bold>
             <Location>{location}</Location>
@@ -199,4 +208,4 @@ const Post = ({
   );
 };
 
-export default Post;
+export default withNavigation(Post);

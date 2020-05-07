@@ -74,7 +74,7 @@ const CommentInput = styled.TextInput`
   border: none;
 `;
 
-export default ({ route }) => {
+export default ({ route, navigation }) => {
   const commentInput: useInputProps = useInput("");
   const datas = route.params;
   return (
@@ -85,7 +85,13 @@ export default ({ route }) => {
             style={{ height: 40, width: 40, borderRadius: 20 }}
             source={{ uri: datas.user.avatar }}
           />
-          <Touchable>
+          <Touchable
+            onPress={() =>
+              navigation.navigate("UserDetail", {
+                username: datas.user.username,
+              })
+            }
+          >
             <Id>{datas.user.username}</Id>
           </Touchable>
           <Text> {datas.caption}</Text>
@@ -118,7 +124,13 @@ export default ({ route }) => {
                           }}
                           source={{ uri: datas.user.avatar }}
                         />
-                        <Touchable>
+                        <Touchable
+                          onPress={() =>
+                            navigation.navigate("UserDetail", {
+                              username: data.user.username,
+                            })
+                          }
+                        >
                           <Id>{data.user.username}</Id>
                         </Touchable>
                         <Text> {data.text.trim()}</Text>

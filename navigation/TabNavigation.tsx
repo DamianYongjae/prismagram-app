@@ -13,6 +13,8 @@ import NavIcon from "../components/NavIcon";
 import styles from "../styles";
 import { stackStyles } from "./config";
 import Detail from "../screens/Detail";
+import Comment from "../screens/Comments/Comment";
+import UserDetail from "../screens/Tabs/UserDetail";
 
 const stackFactory = (initialRoute): JSX.Element => {
   const Stack = createStackNavigator();
@@ -24,6 +26,7 @@ const stackFactory = (initialRoute): JSX.Element => {
         headerStyle: {
           ...stackStyles,
         },
+        headerTintColor: styles.blackColor,
       }}
     >
       <Stack.Screen
@@ -31,7 +34,9 @@ const stackFactory = (initialRoute): JSX.Element => {
         component={params.routeName}
         options={params.customConfig}
       />
+      <Stack.Screen name="Comment" component={Comment} />
       <Stack.Screen name="Detail" component={Detail} />
+      <Stack.Screen name="UserDetail" component={UserDetail} />
     </Stack.Navigator>
   );
 };

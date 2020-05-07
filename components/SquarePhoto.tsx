@@ -11,10 +11,17 @@ type SquarePhotoProps = {
 
 const SquarePhoto = ({ navigation, files = [], id }: SquarePhotoProps) => {
   return (
-    <TouchableOpacity onPress={() => navigation.navigate("Detail", { id })}>
+    <TouchableOpacity
+      style={{ padding: 1 }}
+      onPress={() => navigation.navigate("Detail", { id })}
+    >
       <Image
         source={{ uri: files[0].url }}
-        style={{ width: constants.width / 3, height: constants.height / 6 }}
+        style={{
+          width: constants.width / 3 - 2,
+          height: constants.height / 6,
+          borderRadius: 4,
+        }}
       />
     </TouchableOpacity>
   );
