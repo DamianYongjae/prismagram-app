@@ -14,12 +14,14 @@ const NavIcon = ({
   color = styles.blackColor,
   size = 22,
   focused = true,
+  style,
 }: NavIconProps): JSX.Element => (
   <Ionicons
     focused={focused}
     name={name}
     color={focused ? color : styles.darkGreyColor}
     size={size}
+    style={style}
   />
 );
 

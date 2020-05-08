@@ -10,6 +10,7 @@ export default function CommentNavigation({ route }): JSX.Element {
   const comments: string = route.params.comments;
   const user: string = route.params.user;
   const caption: string = route.params.caption;
+  const id: string = route.params.id;
   return (
     <Stack.Navigator
       screenOptions={{
@@ -25,6 +26,7 @@ export default function CommentNavigation({ route }): JSX.Element {
           comments,
           user,
           caption,
+          id,
         }}
       />
       <Stack.Screen name="UserDetail" component={UserDetail} />

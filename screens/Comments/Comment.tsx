@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import {
   Image,
@@ -13,6 +13,23 @@ import styles from "../../styles";
 import constants from "../constants";
 import useInput, { useInputProps } from "../../hooks/useInput";
 import { Ionicons } from "@expo/vector-icons";
+import { gql } from "apollo-boost";
+import { useMutation } from "react-apollo-hooks";
+import { Alert } from "react-native";
+import { FEED_QUERY } from "../Tabs/Home";
+import { POST_DETAIL } from "../Detail";
+
+export const ADD_COMMENT = gql`
+  mutation addComment($postId: String!, $text: String!) {
+    addComment(postId: $postId, text: $text) {
+      id
+      text
+      user {
+        username
+      }
+    }
+  }
+`;
 
 const Container = styled.SafeAreaView`
   flex: 1;
@@ -76,7 +93,36 @@ const CommentInput = styled.TextInput`
 
 export default ({ route, navigation }) => {
   const commentInput: useInputProps = useInput("");
+  const [isCommentAdd, setIsCommentAdd] = useState(true);
+  const [selfComments, setSelfComments] = useState([]);
   const datas = route.params;
+  const postId = route.params.id;
+
+  const [addCommentMutation] = useMutation(ADD_COMMENT, {
+    variables: { postId, text: commentInput.value },
+    refetchQueries: () => [{ query: FEED_QUERY }],
+  });
+
+  const handlePostComment = async () => {
+    try {
+      const {
+        data: { addComment },
+      } = await addCommentMutation();
+
+      setSelfComments([...selfComments, addComment]);
+      commentInput.setValue("");
+      setIsCommentAdd(true);
+    } catch {
+      Alert.alert("Can't send comment");
+    }
+  };
+
+  useEffect(() => {
+    if (isCommentAdd) {
+      setIsCommentAdd(false);
+    }
+  }, []);
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Container>
@@ -154,9 +200,11 @@ export default ({ route, navigation }) => {
                 placeholder="Add a Comment"
                 autoCapitalize="words"
                 autoCorrect={false}
+                value={commentInput.value}
+                onChangeText={commentInput.onChange}
               />
 
-              <Touchable>
+              <Touchable onPress={handlePostComment}>
                 <PostButton>Post</PostButton>
               </Touchable>
             </CommentInputContainer>

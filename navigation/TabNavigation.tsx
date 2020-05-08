@@ -46,6 +46,7 @@ const Tab = createBottomTabNavigator();
 export default function TabNavigation({ navigation }): JSX.Element {
   return (
     <Tab.Navigator
+      initialRouteName="Home"
       tabBarOptions={{
         showLabel: false,
         style: {
@@ -101,6 +102,15 @@ export default function TabNavigation({ navigation }): JSX.Element {
               focused={focused}
               name={Platform.OS === "ios" ? "ios-add" : "md-add"}
               size={28}
+              style={{
+                borderWidth: 2,
+                borderRadius: 15,
+                borderColor: styles.darkGreyColor,
+                width: 30,
+                height: 30,
+                textAlign: "center",
+                padding: "auto",
+              }}
             />
           ),
         }}

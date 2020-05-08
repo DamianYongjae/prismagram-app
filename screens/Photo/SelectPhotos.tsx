@@ -41,7 +41,6 @@ export default ({ navigation, route }) => {
   const getPhotos = async () => {
     try {
       const { assets } = await MediaLibrary.getAssetsAsync();
-      console.log(assets);
       const [firstPhoto] = assets;
       setSelected(firstPhoto);
       setAllPhotos(assets);

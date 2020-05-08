@@ -198,6 +198,7 @@ const Post = ({
               comments,
               user,
               caption,
+              id,
             })
           }
         >
