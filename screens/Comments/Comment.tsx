@@ -17,7 +17,6 @@ import { gql } from "apollo-boost";
 import { useMutation } from "react-apollo-hooks";
 import { Alert } from "react-native";
 import { FEED_QUERY } from "../Tabs/Home";
-import { POST_DETAIL } from "../Detail";
 
 export const ADD_COMMENT = gql`
   mutation addComment($postId: String!, $text: String!) {
@@ -93,8 +92,8 @@ const CommentInput = styled.TextInput`
 
 export default ({ route, navigation }) => {
   const commentInput: useInputProps = useInput("");
-  const [isCommentAdd, setIsCommentAdd] = useState(true);
   const [selfComments, setSelfComments] = useState([]);
+  const [loading, setLoading] = useState(false);
   const datas = route.params;
   const postId = route.params.id;
 
@@ -105,23 +104,20 @@ export default ({ route, navigation }) => {
 
   const handlePostComment = async () => {
     try {
-      const {
-        data: { addComment },
-      } = await addCommentMutation();
+      if (commentInput.value !== "") {
+        const {
+          data: { addComment },
+        } = await addCommentMutation();
 
-      setSelfComments([...selfComments, addComment]);
-      commentInput.setValue("");
-      setIsCommentAdd(true);
+        setSelfComments([...selfComments, addComment]);
+        commentInput.setValue("");
+      } else {
+        Alert.alert("Please input comment!!");
+      }
     } catch {
       Alert.alert("Can't send comment");
     }
   };
-
-  useEffect(() => {
-    if (isCommentAdd) {
-      setIsCommentAdd(false);
-    }
-  }, []);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -202,6 +198,8 @@ export default ({ route, navigation }) => {
                 autoCorrect={false}
                 value={commentInput.value}
                 onChangeText={commentInput.onChange}
+                returnKeyType="send"
+                onSubmitEditing={handlePostComment}
               />
 
               <Touchable onPress={handlePostComment}>
