@@ -15,6 +15,11 @@ import { stackStyles } from "./config";
 import Detail from "../screens/Detail";
 import Comment from "../screens/Comments/Comment";
 import UserDetail from "../screens/Tabs/UserDetail";
+import { YellowBox } from "react-native";
+
+YellowBox.ignoreWarnings([
+  "Non-serializable values were found in the navigation state",
+]);
 
 const stackFactory = (initialRoute): JSX.Element => {
   const Stack = createStackNavigator();

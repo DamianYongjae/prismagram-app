@@ -8,7 +8,7 @@ import Post from "../components/Post";
 import Loader from "../components/Loader";
 import { ScrollView } from "react-native";
 
-const POST_DETAIL = gql`
+export const POST_DETAIL = gql`
   query seeFullPost($id: String!) {
     seeFullPost(id: $id) {
       ...PostParts

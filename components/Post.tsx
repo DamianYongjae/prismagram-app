@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useMutation } from "react-apollo-hooks";
-import { Image, Platform } from "react-native";
+import { Image, Platform, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import styled from "styled-components";
 import Swiper from "react-native-swiper";
@@ -8,6 +8,7 @@ import constants from "../screens/constants";
 import styles from "../styles";
 import { gql } from "apollo-boost";
 import { withNavigation } from "react-navigation";
+import contents from "../screens/constants";
 
 const LIKE_POST = gql`
   mutation toggleLike($postId: String!) {
@@ -89,6 +90,21 @@ const CommentCount = styled.Text`
   font-size: 13px;
 `;
 
+const CommentContainer = styled.View`
+  width: ${contents.width}px;
+  padding-left: 10px;
+`;
+
+const CommentContent = styled.View`
+  height: 20px;
+  width: ${contents.width}px;
+  flex-direction: row;
+`;
+
+const CommentText = styled.Text`
+  margin-left: 5px;
+`;
+
 const Post = ({
   id,
   user,
@@ -103,6 +119,7 @@ const Post = ({
 }: PostProp): JSX.Element => {
   const [isLiked, setIsLiked]: [boolean, Function] = useState(isLikedProp);
   const [likeCount, setLikeCount]: [number, Function] = useState(likeCountProp);
+  const [showComment, setShowComment]: [boolean, Function] = useState(false);
   const [toggleLikeMutation] = useMutation(LIKE_POST, {
     variables: {
       postId: id,
@@ -119,6 +136,11 @@ const Post = ({
       await toggleLikeMutation();
     } catch (e) {}
   };
+
+  const toggleComment = async (): Promise<void> => {
+    setShowComment(!showComment);
+  };
+
   return (
     <Container>
       <Header>
@@ -176,11 +198,20 @@ const Post = ({
               />
             </IconContainer>
           </Touchable>
-          <Touchable>
+          <Touchable
+            onPress={() =>
+              navigation.navigate("CommentNavigation", {
+                comments,
+                user,
+                caption,
+                id,
+              })
+            }
+          >
             <IconContainer>
               <Ionicons
                 size={28}
-                color={styles.blackColor}
+                color={styles.darkGreyColor}
                 name={Platform.OS === "ios" ? "ios-text" : "md-text"}
               />
             </IconContainer>
@@ -192,19 +223,34 @@ const Post = ({
         <Caption>
           <Bold>{user.username}</Bold> {caption}
         </Caption>
-        <Touchable
-          onPress={() =>
-            navigation.navigate("CommentNavigation", {
-              comments,
-              user,
-              caption,
-              id,
-            })
-          }
-        >
-          <CommentCount>See all {commentCount} comments</CommentCount>
+        <Touchable onPress={toggleComment}>
+          {!showComment ? (
+            <CommentCount>See all {commentCount} comments</CommentCount>
+          ) : (
+            <CommentCount>Hide all comments</CommentCount>
+          )}
         </Touchable>
       </InfoContainer>
+      <CommentContainer>
+        {!showComment
+          ? null
+          : comments.map((comment) => {
+              return (
+                <CommentContent key={comment.id}>
+                  <Touchable
+                    onPress={() =>
+                      navigation.navigate("UserDetail", {
+                        username: comment.user.username,
+                      })
+                    }
+                  >
+                    <Bold>{comment.user.username}</Bold>
+                  </Touchable>
+                  <CommentText>{comment.text.trim()}</CommentText>
+                </CommentContent>
+              );
+            })}
+      </CommentContainer>
     </Container>
   );
 };

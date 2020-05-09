@@ -14,9 +14,11 @@ import constants from "../constants";
 import useInput, { useInputProps } from "../../hooks/useInput";
 import { Ionicons } from "@expo/vector-icons";
 import { gql } from "apollo-boost";
-import { useMutation } from "react-apollo-hooks";
+import { useMutation, useQuery } from "react-apollo-hooks";
 import { Alert } from "react-native";
 import { FEED_QUERY } from "../Tabs/Home";
+import { POST_DETAIL } from "../Detail";
+import Loader from "../../components/Loader";
 
 export const ADD_COMMENT = gql`
   mutation addComment($postId: String!, $text: String!) {
@@ -60,7 +62,7 @@ const CommentInputContainer = styled.View`
 
 const CommentContainer = styled.View`
   flex-direction: row;
-  height: 70px;
+  height: 50px;
   align-items: center;
   padding-left: 10px;
 `;
@@ -93,13 +95,16 @@ const CommentInput = styled.TextInput`
 export default ({ route, navigation }) => {
   const commentInput: useInputProps = useInput("");
   const [selfComments, setSelfComments] = useState([]);
-  const [loading, setLoading] = useState(false);
   const datas = route.params;
   const postId = route.params.id;
 
   const [addCommentMutation] = useMutation(ADD_COMMENT, {
     variables: { postId, text: commentInput.value },
     refetchQueries: () => [{ query: FEED_QUERY }],
+  });
+
+  const { loading, data } = useQuery(POST_DETAIL, {
+    variables: { id: route.params.id },
   });
 
   const handlePostComment = async () => {
@@ -152,11 +157,14 @@ export default ({ route, navigation }) => {
           >
             <ScrollView>
               <CommentsContainer>
-                {datas &&
-                  datas.comments &&
-                  datas.comments.map((data) => {
+                {loading ? (
+                  <Loader />
+                ) : (
+                  data &&
+                  data.seeFullPost &&
+                  data.seeFullPost.comments.map((comment) => {
                     return (
-                      <CommentContainer key={data.id}>
+                      <CommentContainer key={comment.id}>
                         <Image
                           style={{
                             height: 30,
@@ -164,21 +172,22 @@ export default ({ route, navigation }) => {
                             borderRadius: 20,
                             marginRight: 5,
                           }}
-                          source={{ uri: datas.user.avatar }}
+                          source={{ uri: comment.user.avatar }}
                         />
                         <Touchable
                           onPress={() =>
                             navigation.navigate("UserDetail", {
-                              username: data.user.username,
+                              username: comment.user.username,
                             })
                           }
                         >
-                          <Id>{data.user.username}</Id>
+                          <Id>{comment.user.username}</Id>
                         </Touchable>
-                        <Text> {data.text.trim()}</Text>
+                        <Text> {comment.text.trim()}</Text>
                       </CommentContainer>
                     );
-                  })}
+                  })
+                )}
               </CommentsContainer>
             </ScrollView>
 

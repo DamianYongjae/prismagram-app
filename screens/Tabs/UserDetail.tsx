@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View } from "react-native";
 import styles from "../../styles";
 import { USER_FRAGMENT } from "../../fragment";
@@ -27,6 +27,8 @@ export default ({ navigation, route }) => {
   const { loading, data } = useQuery(GET_USER, {
     variables: { username: route.params.username },
   });
+
+  console.log(data);
 
   return (
     <ScrollView style={{ flex: 1 }}>

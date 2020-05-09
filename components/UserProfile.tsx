@@ -73,7 +73,7 @@ const UserProfile = ({
   fullName,
   posts,
   navigation,
-}) => {
+}: UserProfileProps) => {
   const [isGrid, setIsGrid]: [boolean, Function] = useState(true);
   const toggleGrid = () => {
     setIsGrid(!isGrid);
