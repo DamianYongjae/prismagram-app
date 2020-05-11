@@ -30,13 +30,13 @@ export default function App(): JSX.Element {
         require("./assets/logo.svg"),
         require("./assets/logo_text.png"),
       ]);
-      const cache: InMemoryCache = new InMemoryCache(); //create cache to persist cache.
-      await persistCache({
-        cache,
-        storage: AsyncStorage, //like local storage. if you refresh data still there.
-      });
+      // const cache: InMemoryCache = new InMemoryCache(); //create cache to persist cache.
+      // await persistCache({
+      //   cache,
+      //   storage: AsyncStorage, //like local storage. if you refresh data still there.
+      // });
       const client = new ApolloClient({
-        cache,
+        // cache,
         request: async (operation) => {
           // requrest is a function that is going to give us an operation argument will be called every request!!
           const token = await AsyncStorage.getItem("jwt");

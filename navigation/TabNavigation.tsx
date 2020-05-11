@@ -1,11 +1,11 @@
 import React from "react";
-import { Image } from "react-native";
 import { Platform } from "react-native";
 import Home from "../screens/Tabs/Home";
 import Search from "../screens/Tabs/Search";
 import Notifications from "../screens/Tabs/Notifications";
 import Profile from "../screens/Tabs/Profile";
 import MessagesLink from "../components/MessagesLink";
+import LogoutLink from "../components/LogoutLink";
 import { View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -167,6 +167,7 @@ export default function TabNavigation({ navigation }): JSX.Element {
           routeName: Profile,
           customConfig: {
             title: "Profile",
+            headerRight: () => <LogoutLink navigation={navigation} />,
           },
         }}
       />
