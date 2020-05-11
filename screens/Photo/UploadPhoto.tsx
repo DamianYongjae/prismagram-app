@@ -83,7 +83,7 @@ export default ({ navigation, route }) => {
       setIsloading(true);
       const {
         data: { location },
-        // } = await axios.post("http://localhost:4000/api/upload", formData, {
+        // } = await axios.post("http://localhost:4000/api/upload", formData, {   //development environment
       } = await axios.post(
         "https://prismagram-backend-damian.herokuapp.com/api/upload",
         formData,
