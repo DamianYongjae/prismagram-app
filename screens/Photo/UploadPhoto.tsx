@@ -83,11 +83,16 @@ export default ({ navigation, route }) => {
       setIsloading(true);
       const {
         data: { location },
-      } = await axios.post("http://localhost:4000/api/upload", formData, {
-        headers: {
-          "cotent-type": "multipart/form-data",
-        },
-      });
+        // } = await axios.post("http://localhost:4000/api/upload", formData, {
+      } = await axios.post(
+        "https://prismagram-backend-damian.herokuapp.com/api/upload",
+        formData,
+        {
+          headers: {
+            "cotent-type": "multipart/form-data",
+          },
+        }
+      );
 
       console.log(location);
 
