@@ -6,6 +6,20 @@ import { Ionicons } from "@expo/vector-icons";
 import constants from "../screens/constants";
 import Post from "../components/Post";
 import SquarePhoto from "../components/SquarePhoto";
+import { gql } from "apollo-boost";
+import { useMutation } from "react-apollo-hooks";
+
+export const FOLLOW = gql`
+  mutation follow($id: String!) {
+    follow(id: $id)
+  }
+`;
+
+export const UNFOLLOW = gql`
+  mutation unfollow($id: String!) {
+    unfollow(id: $id)
+  }
+`;
 
 const ProfileHeader = styled.View`
   padding: 20px;
@@ -13,15 +27,18 @@ const ProfileHeader = styled.View`
   justify-content: space-between;
   align-items: center;
 `;
-const HeaderColumn = styled.View``;
+const HeaderColumn = styled.View`
+  flex: 1;
+`;
 
 const ProfileStats = styled.View`
   flex-direction: row;
+  margin-bottom: 10px;
 `;
 
 const Stat = styled.View`
   align-items: center;
-  margin-left: 40px;
+  margin-left: 35px;
 `;
 
 const Bold = styled.Text`
@@ -53,11 +70,35 @@ const Button = styled.View`
   align-items: center;
 `;
 
+const HeaderButtonContainer = styled.View`
+  width: 100%;
+  margin-top: 10px;
+  margin-left: 35px;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+`;
+
+const HeaderButton = styled.TouchableOpacity`
+  background-color: ${(props) => props.theme.blueColor};
+  width: 50%;
+  border-radius: 5px;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+  margin: 0 8px;
+`;
+
 type UserProfileProps = {
+  id: string;
   avatar: string;
   postsCount: number;
   followersCount: number;
   followingCount: number;
+  isSelf: boolean;
+  isFollowing: boolean;
   bio: string;
   fullName: string;
   posts?;
@@ -65,10 +106,14 @@ type UserProfileProps = {
 };
 
 const UserProfile = ({
+  username,
+  id,
   avatar,
   postsCount,
   followersCount,
   followingCount,
+  isSelf,
+  isFollowing,
   bio,
   fullName,
   posts,
@@ -78,6 +123,20 @@ const UserProfile = ({
   const toggleGrid = () => {
     setIsGrid(!isGrid);
   };
+  const [isFollowingS, setIsFollowing] = useState(isFollowing);
+  const [followMutation] = useMutation(FOLLOW, { variables: { id } });
+  const [unfollowMutation] = useMutation(UNFOLLOW, { variables: { id } });
+
+  const onClick = () => {
+    if (isFollowingS === true) {
+      setIsFollowing(false);
+      unfollowMutation();
+    } else {
+      setIsFollowing(true);
+      followMutation();
+    }
+  };
+
   return (
     <View>
       <ProfileHeader>
@@ -100,6 +159,21 @@ const UserProfile = ({
               <StatName>Followings</StatName>
             </Stat>
           </ProfileStats>
+          {!isSelf ? (
+            <HeaderButtonContainer style={{ paddingRight: 40 }}>
+              <HeaderButton key={"follow"} onPress={onClick}>
+                <Bold style={{ color: "white" }}>
+                  {isFollowingS ? "Unfollow" : "Follow"}
+                </Bold>
+              </HeaderButton>
+              <HeaderButton
+                key={"message"}
+                onPress={() => navigation.navigate("MessageNavigation")}
+              >
+                <Bold style={{ color: "white" }}>Message</Bold>
+              </HeaderButton>
+            </HeaderButtonContainer>
+          ) : null}
         </HeaderColumn>
       </ProfileHeader>
       <ProfileMeta>

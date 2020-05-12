@@ -7,6 +7,7 @@ import { useQuery } from "react-apollo-hooks";
 import UserProfile from "../../components/UserProfile";
 import Loader from "../../components/Loader";
 import { ScrollView } from "react-native";
+import { ME } from "./Profile";
 
 const GET_USER = gql`
   query seeUser($username: String!) {
@@ -27,8 +28,6 @@ export default ({ navigation, route }) => {
   const { loading, data } = useQuery(GET_USER, {
     variables: { username: route.params.username },
   });
-
-  console.log(data);
 
   return (
     <ScrollView style={{ flex: 1 }}>

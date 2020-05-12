@@ -2,7 +2,7 @@ import React from "react";
 import { Platform } from "react-native";
 import Home from "../screens/Tabs/Home";
 import Search from "../screens/Tabs/Search";
-import Notifications from "../screens/Tabs/Notifications";
+import Notifications from "../screens/Notifications/Notifications";
 import Profile from "../screens/Tabs/Profile";
 import MessagesLink from "../components/MessagesLink";
 import LogoutLink from "../components/LogoutLink";
@@ -15,7 +15,7 @@ import { stackStyles } from "./config";
 import Detail from "../screens/Detail";
 import Comment from "../screens/Comments/Comment";
 import UserDetail from "../screens/Tabs/UserDetail";
-import { YellowBox } from "react-native";
+import { YellowBox, Image } from "react-native";
 
 YellowBox.ignoreWarnings([
   "Non-serializable values were found in the navigation state",
@@ -76,7 +76,15 @@ export default function TabNavigation({ navigation }): JSX.Element {
           customConfig: {
             title: "Home",
             headerRight: () => <MessagesLink navigation={navigation} />,
-            headerTitle: <NavIcon name="logo-instagram" size={36} />,
+            // headerTitle: <NavIcon name="logo-instagram" size={36} />,
+            headerTitle: (
+              <Image
+                source={require("../assets/logo_text.png")}
+                style={{ width: 150, height: 40 }}
+                resizeMode={"contain"}
+                resizeMethod={"resize"}
+              />
+            ),
           },
         }}
       />

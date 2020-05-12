@@ -1,9 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { withNavigation } from "react-navigation";
-import { Ionicons } from "@expo/vector-icons";
 import { Platform } from "react-native";
-import styles from "../styles";
 import NavIcon from "./NavIcon";
 
 const Container = styled.TouchableOpacity`
