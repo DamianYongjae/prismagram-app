@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { useQuery } from "react-apollo-hooks";
 import Loader from "../../components/Loader";
-// import { ME } from "../Tabs/Profile";
 import NotificationDetail from "./NotificationDetail";
 import { View } from "react-native";
 import { gql } from "apollo-boost";
