@@ -7,7 +7,7 @@ import Loader from "../../components/Loader";
 import { useQuery } from "react-apollo-hooks";
 import UserProfile from "../../components/UserProfile";
 
-export const ME = gql`
+const ME = gql`
   {
     me {
       ...UserParts

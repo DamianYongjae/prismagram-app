@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View } from "react-native";
 import styled from "styled-components";
-import { gql } from "apollo-boost";
-import { useQuery } from "react-apollo-hooks";
+import gql from "graphql-tag";
+import { useQuery, useSubscription, useMutation } from "react-apollo-hooks";
 import { KeyboardAvoidingView } from "react-native";
 import Loader from "../../components/Loader";
+import withSuspense from "../../WithSuspense";
+import { SEE_ROOMS } from "./Messages";
 
 const SEE_ROOM = gql`
   query seeRoom($id: String!) {
@@ -17,6 +19,7 @@ const SEE_ROOM = gql`
       createdAt
       updatedAt
       message {
+        id
         text
         from {
           username
@@ -31,6 +34,28 @@ const SEE_ROOM = gql`
   }
 `;
 
+const NEW_MESSAGE = gql`
+  subscription newMessage($roomId: String!) {
+    newMessage(roomId: $roomId) {
+      id
+      text
+      from {
+        username
+        avatar
+      }
+      createdAt
+    }
+  }
+`;
+
+const SEND_MESSAGE = gql`
+  mutation sendMessage($roomId: String, $message: String, $toId: String) {
+    sendMessage(roomId: $roomId, message: $message, toId: $toId) {
+      id
+    }
+  }
+`;
+
 const Container = styled.ScrollView``;
 
 const ChatContainer = styled.View`
@@ -39,6 +64,7 @@ const ChatContainer = styled.View`
   padding: 10px;
   flex-direction: column;
   margin-top: 10px;
+  justify-content: flex-start;
 `;
 
 const ChatLine = styled.View`
@@ -53,7 +79,9 @@ const Avatar = styled.Image`
   height: 30px;
 `;
 
-const User = styled.Text``;
+const User = styled.Text`
+  padding-left: 15px;
+`;
 
 const Text = styled.Text`
   margin-left: 5px;
@@ -91,19 +119,69 @@ const TextInput = styled.TextInput`
   margin-bottom: 30px;
   padding-left: 20px;
   background-color: #f2f2f2;
+  border-width: 1px;
+  padding: 10px;
+  align-self: center;
+  border-color: ${(props) => props.theme.darkGreyColor};
 `;
 
-export default ({ route, navigation }) => {
+export default function Message({ route, navigation }) {
   const roomId = route.params.id;
   const myUsername = route.params.myUsername;
-  const [message, setMessage] = useState();
-  const { data, loading } = useQuery(SEE_ROOM, {
+  const toId = route.params.participants.filter(
+    (user) => user.username !== myUsername
+  )[0].id;
+  let oldMessage = route.params.message;
+
+  const [message, setMessage] = useState("");
+  const { data: roomData, loading } = useQuery(SEE_ROOM, {
     variables: {
       id: roomId,
     },
+    fetchPolicy: "no-cache",
+    // suspend: true,
   });
 
+  if (roomData !== undefined) {
+    oldMessage = roomData.message;
+  }
+
+  const { data } = useSubscription(NEW_MESSAGE, { variables: { roomId } });
+  const [messages, setMessages] = useState(oldMessage || []);
+
+  const handleNewMessage = () => {
+    if (data !== undefined) {
+      console.log(data);
+      const { newMessage } = data;
+      setMessages((previous) => [...previous, newMessage]);
+    }
+  };
+  useEffect(() => {
+    handleNewMessage();
+  }, [data]);
+
+  const [sendMessageMutation] = useMutation(SEND_MESSAGE, {
+    variables: {
+      roomId: roomId,
+      message: message,
+      toId: toId,
+    },
+    refetchQueries: () => [{ query: SEE_ROOM }],
+  });
   const onChangeText = (text) => setMessage(text);
+
+  const onSubmit = async () => {
+    if (message === "") {
+      return;
+    }
+    try {
+      await sendMessageMutation();
+
+      setMessage("");
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <KeyboardAvoidingView
@@ -122,12 +200,12 @@ export default ({ route, navigation }) => {
           {loading ? (
             <Loader />
           ) : (
-            data &&
-            data.seeRoom &&
-            data.seeRoom.message &&
-            data.seeRoom.message.map((m) =>
+            // data &&
+            // data.seeRoom &&
+            // message &&
+            messages.map((m) =>
               m.from.username === myUsername ? (
-                <ChatLine key={m.id} style={{ alignSelf: "flex-end" }}>
+                <ChatLine key={m.id + m.text} style={{ alignSelf: "flex-end" }}>
                   <Bubble
                     style={{
                       paddingRight: 5,
@@ -149,7 +227,7 @@ export default ({ route, navigation }) => {
                   {/* <Time>{m.createdAt}</Time> */}
                 </ChatLine>
               ) : (
-                <ChatLine key={m.id}>
+                <ChatLine key={m.id + m.text}>
                   <Avatar source={{ uri: m.from.avatar }} />
                   <Bubble style={{ paddingLeft: 5 }}>
                     <User>{m.from.username}</User>
@@ -174,8 +252,10 @@ export default ({ route, navigation }) => {
         returnKeyType="send"
         value={message}
         onChangeText={onChangeText}
-        // onSubmitEditing={onSubmit}
+        onSubmitEditing={onSubmit}
       />
     </KeyboardAvoidingView>
   );
-};
+}
+
+// export default withSuspense(Message);

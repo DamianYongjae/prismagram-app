@@ -1,20 +1,27 @@
-import React, { useState } from "react";
-import { Text, View, TouchableOpacity } from "react-native";
+import React from "react";
 import styled from "styled-components";
 import { gql } from "apollo-boost";
 import { useQuery } from "react-apollo-hooks";
 import Loader from "../../components/Loader";
-import Message from "./Message";
 
-const SEE_ROOMS = gql`
+export const SEE_ROOMS = gql`
   {
     seeRooms {
       id
       participants {
+        id
         username
         avatar
       }
       updatedAt
+      message {
+        text
+        from {
+          username
+          avatar
+        }
+        createdAt
+      }
     }
     me {
       username
@@ -47,9 +54,10 @@ const InfoContainer = styled.View``;
 const User = styled.Text`
   font-weight: 600;
 `;
+const Message = styled.Text``;
 
 export default ({ navigation }) => {
-  const { data, loading } = useQuery(SEE_ROOMS);
+  const { data, loading } = useQuery(SEE_ROOMS, { fetchPolicy: "no-cache" });
 
   return (
     <Container>
@@ -61,21 +69,35 @@ export default ({ navigation }) => {
         data.me &&
         data.seeRooms.map((list) => (
           <Room
+            key={list.id}
             onPress={() =>
               navigation.navigate("Message", {
                 id: list.id,
                 myUsername: data.me.username,
+                participants: list.participants,
+                message: list.message,
               })
             }
           >
             <Avatar
+              key={
+                list.participants.filter(
+                  (user) => user.username !== data.me.username
+                )[0].avatar
+              }
               source={{
                 uri: list.participants.filter(
                   (user) => user.username !== data.me.username
                 )[0].avatar,
               }}
-            ></Avatar>
-            <InfoContainer>
+            />
+            <InfoContainer
+              key={
+                list.participants.filter(
+                  (user) => user.username !== data.me.username
+                )[0].username
+              }
+            >
               <User>
                 {
                   list.participants.filter(
@@ -83,6 +105,7 @@ export default ({ navigation }) => {
                   )[0].username
                 }
               </User>
+              <Message>{list.message[list.message.length - 1].text}</Message>
             </InfoContainer>
           </Room>
         ))

@@ -67,8 +67,13 @@ const Touchable = styled.TouchableOpacity`
   align-items: center;
 `;
 
-const NotificationDetail = ({ me, compare, getTimeDiff, navigation }) => {
-  const posts = me.posts;
+const NotificationDetail = ({
+  posts,
+  username,
+  compare,
+  getTimeDiff,
+  navigation,
+}) => {
   const commentList = [];
   const likeList = [];
 
@@ -96,7 +101,7 @@ const NotificationDetail = ({ me, compare, getTimeDiff, navigation }) => {
 
   notiList = notiList.filter(
     (list) =>
-      list.user.username !== me.username &&
+      list.user.username !== username &&
       list.createdAt > notiLimitDate.toISOString()
   );
 

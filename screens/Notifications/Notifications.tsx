@@ -6,7 +6,7 @@ import { View } from "react-native";
 import { gql } from "apollo-boost";
 import constants from "../constants";
 
-const ME = gql`
+const GET_DATA = gql`
   {
     me {
       username
@@ -47,7 +47,7 @@ const ME = gql`
 `;
 
 export default ({ navigation }) => {
-  const { loading: userLoading, data: me } = useQuery(ME);
+  const { loading, data } = useQuery(GET_DATA, { fetchPolicy: "no-cache" });
 
   function compare(a, b) {
     const date1 = a.createdAt;
@@ -82,14 +82,17 @@ export default ({ navigation }) => {
       return now.getDate() - postTime.getDate() + 30 + " days ago";
     }
   };
+
   return (
     <View style={{ flex: 1, width: constants.width, height: constants.height }}>
-      {userLoading ? (
+      {loading ? (
         <Loader />
       ) : (
-        me && (
+        !loading &&
+        data &&
+        data.me && (
           <NotificationDetail
-            {...me}
+            {...data.me}
             compare={compare}
             getTimeDiff={getTimeDiff}
             navigation={navigation}
