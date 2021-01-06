@@ -23,7 +23,7 @@
     "apollo-link-http": "^1.5.17",
     "apollo-link-state": "^0.4.2",
     "apollo-link-ws": "^1.0.20",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "expo": "^37.0.0",
     "expo-asset": "~8.1.4",
     "expo-camera": "~8.2.0",
